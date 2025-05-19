@@ -1,0 +1,50 @@
+--Опрошенный
+MERGE (
+    p:Person {name: 'Oleg'}
+)
+SET p.age = 25,
+    p.gender = 'Мужчина',
+    p.occupation = 'Повар'
+
+--Город
+MERGE (
+    c:City {name: 'Samara'}
+)
+SET c.is_capital = false,
+    c.noise_pollution_level = 70,
+    c.access_to_nature = 0.3
+
+--Опрос
+MERGE (
+    q:Survey { id: 1 }
+)
+SET q.stress_level = 3,
+    q.anxiety_level = 4,
+    q.depression_level = 5
+
+--Связь с городом
+MERGE (
+    p:Person { name: 'Oleg' }
+)
+MERGE (
+    c:City { name: 'Samara' }
+)
+MERGE 
+    (p)-[
+        r:lives_in { date:datetime() }
+    ]->(c)
+
+--Связь с опросом
+MERGE (
+    p:Person { name: 'Oleg' }
+)
+MERGE (
+    q:Survey { id: 1 }
+)
+MERGE 
+    (p)-[
+        r:Participated {date: datetime()}
+    ]-(q)
+SET q.stress_level = 3,
+    q.anxiety_level = 4,
+    q.depression_level = 5

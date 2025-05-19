@@ -1,0 +1,125 @@
+1. Предметная область в PlantUML
+2. Для подключения использовался Spring Data Redis и клиент Lettuce
+3. Продемонстрируем CRUD
+    4.1 Показать текущие данные во всех таблицах (list)
+        people list
+        stats list
+        habits list
+    4.2 Показать ключи во всех таблицах (keys)
+        people keys
+        stats keys
+        habits keys
+    4.2 Продемонстрировать добавление 
+        people new      - ид генерируется через отельную запись "последовательность".
+        people keys     - добавлены ключи для каждого поля
+    4.3 Продемонстрировать изменение.
+        people edit     
+    4.4 Продемонстрировать удаление. Указать на ALTER TABLE.
+        people delete   - через unlink
+                        - каскадное удаление на клиенте (list других таблиц)
+4. Продемонстрировать List
+    4.1 Показать текущие данные в первом списке
+        name-list get
+    4.2 Показать данный список в RedisInsight
+    4.3 Операции получения
+        name-list get 1 
+                        - один элемент
+        name-list get 0 2
+                        - серия элементов
+        name-list size
+                        - размер
+    4.4 Операции добавления
+        name-list push --values Катя Даша --left
+                        - добавление слева
+        name-list push --values Катя Даша --right
+                        - добавление справа
+    4.5 Операции извлечения
+        name-list pop --right
+                        - извлечение слева
+        name-list pop --left
+                        - извлечение справа
+        name-list pop --left -n 2
+                        - извлечение нескольких
+    4.6 Операция обрезания
+        name-list trim --start 0 --second 2
+                        - можно наспамить элементов перед этим
+    4.7 Продемонстрировать второй список
+        name-list get --second
+    4.6 Операция переноса
+        name-list move --source-first --destination-first
+                        - из начало в начало
+        name-list move --source-first --destination-last
+                        - из начало в конец
+        name-list move --source-last --destination-first --reverse
+                        - (обратно) из конца в начало
+5. Продемонстрировать Set
+    5.1 Показать данные в первом множестве
+        name-set get
+    5.2 Показать первое множество в RedisInsight
+    5.3 Операции получения
+        name-set get --random
+        name-set get 4 --random
+        name-set get 4 --random -distinct
+    5.4 Операции добавления
+        name-set add Маша x3
+        name-set add Саша Маша Саша
+    5.5 Показать второй список
+        name-set get --second
+    5.6 Показать объединение
+        name-set get
+        name-set get --second
+        name-set union
+    5.7 Показать пересечение
+        name-set get
+        name-set get --second
+        name-set intersect
+    5.8 Показать разность
+        name-set get
+        name-set get --second
+        name-set difference
+6. Продемонстрировать Hash
+    6.1 Показать данные в текущей таблице
+        hash get
+    6.2 Показать Hash в RedisInsight
+    6.3 Операции получения
+        hash get
+        hash get Имя
+        hash get --field Имя Город
+        hash get --keys
+        hash get --values
+    6.4 Операции добавления
+        hash put Возраст 20
+        hash put Возраст 21
+        hash put Возраст 22 --absent
+                        - не должно обновиться значение
+    6.5 Операции удаления
+        hash delete Город
+    6.6 Операции увелечения
+        hash increment Возраст 1
+                        - туда
+        hash increment Возраст -1
+                        - обратно
+    6.7 Операции рандома
+        hash random 2
+        hash random 3
+7. Продемонстрировать PUB/SUB
+    7.1 Открыть соседний терминал (Alt + Shift + '+')
+    7.2 Запустить второе приложение
+                        - в запуск.txt
+    7.2 Открыть RedisInsight и на вкладке Pub/Sub
+    7.3 Подписаться в первом терминале
+        message subscribe Канал1    
+                        - создает своё подключение под каждого слушателя
+    7.4 Отправить со второго терминала
+        message publish --channel Канал1 --message Привет
+    7.5 Добавить слушателей в обоих терминалах
+        message subscribe Канал1
+        message subscribe Канал1
+    7.6 Опубликовать сообщение
+        message publish --channel Канал1 --message Алё
+    7.7 Отписаться в обоих терминалах
+        message unsubscribe Канал1
+        message unsubscribe Канал1
+    7.6 Опубликовать сообщение
+        message publish --channel Канал1 --message Алё
+                        - только в RedisInsight

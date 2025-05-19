@@ -1,0 +1,15 @@
+c:\users\nano2\appdata\roaming\python\python310\scripts\cqlsh.exe
+
+1. list по всем
+2. people new
+3. people show + l + id
+4. Про индекс
+    people edit + id
+5. Про каскадный у h и m через delete
+    people delete + l
+6. Фильтр по userid
+    people list + id
+7. Фильтр по дате благодаря индексу
+    habits date 
+7. Фильтр по дате благодаря allow filtering 
+    habits date --greater

@@ -1,0 +1,1 @@
+java -jar "C:\Users\nano2\Desktop\ssau\Мага\Семестр 2\RDBMS И NOSQL\Лабы\Лаба 3\target\lab3-0.0.1-SNAPSHOT.jar"
